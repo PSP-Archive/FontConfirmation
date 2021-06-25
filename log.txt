@@ -1,0 +1,19 @@
+psp-gcc -I. -IC:/pspsdk/psp/sdk/include -O2 -G0 -Wall -g -D_PSP_FW_VERSION=150   -c -o fonttest.o fonttest.c
+psp-gcc -I. -IC:/pspsdk/psp/sdk/include -O2 -G0 -Wall -g -D_PSP_FW_VERSION=150   -c -o intraFont.o intraFont.c
+psp-gcc -I. -IC:/pspsdk/psp/sdk/include -O2 -G0 -Wall -g -D_PSP_FW_VERSION=150   -c -o libccc.o libccc.c
+psp-gcc -I. -IC:/pspsdk/psp/sdk/include -O2 -G0 -Wall -g -D_PSP_FW_VERSION=150  -L. -LC:/pspsdk/psp/sdk/lib   fonttest.o intraFont.o libccc.o -lpspgum -lpspgu -lm  -lpspdebug -lpspdisplay -lpspge -lpspctrl -lpspsdk -lc -lpspnet -lpspnet_inet -lpspnet_apctl -lpspnet_resolver -lpsputility -lpspuser -lpspkernel -o FontConfirmation.elf
+psp-fixup-imports FontConfirmation.elf
+mksfo 'FontConfirmation' PARAM.SFO
+psp-strip FontConfirmation.elf -o FontConfirmation_strip.elf
+pack-pbp EBOOT.PBP PARAM.SFO NULL  \
+	NULL NULL NULL  \
+	NULL  FontConfirmation_strip.elf NULL
+[0]        408 bytes | PARAM.SFO
+[1]          0 bytes | NULL
+[2]          0 bytes | NULL
+[3]          0 bytes | NULL
+[4]          0 bytes | NULL
+[5]          0 bytes | NULL
+[6]     112496 bytes | FontConfirmation_strip.elf
+[7]          0 bytes | NULL
+C:/pspsdk/bin/rm -f FontConfirmation_strip.elf
